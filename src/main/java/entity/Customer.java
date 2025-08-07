@@ -1,3 +1,5 @@
+package entity;
+
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -75,7 +77,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
+        return "entity.Customer{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", mail='" + mail + '\'' +

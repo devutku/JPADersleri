@@ -1,3 +1,5 @@
+package entity;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -11,6 +13,9 @@ public class Code {
     private String group;
     @Column(name = "code_serial",nullable=false)
     private String serial;
+
+    @OneToOne(mappedBy = "code")
+    private Product product;
 
     public Code() {
     }
@@ -39,9 +44,17 @@ public class Code {
         this.serial = serial;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     @Override
     public String toString() {
-        return "Code{" +
+        return "entity.Code{" +
                 "id=" + id +
                 ", group='" + group + '\'' +
                 ", serial='" + serial + '\'' +

@@ -5,8 +5,11 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
 
     <persistence-unit name="market" transaction-type="RESOURCE_LOCAL">
-        <class>Customer</class>
-        <class>Code</class>
+        <class>entity.Customer</class>
+        <class>entity.Code</class>
+        <class>entity.Product</class>
+        <class>entity.Supplier</class>
+        <class>entity.Category</class>
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <properties>
