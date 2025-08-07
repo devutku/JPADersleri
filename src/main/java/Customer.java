@@ -72,4 +72,15 @@ public class Customer {
     public GENDER getGender() {
         return gender;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", mail='" + mail + '\'' +
+                ", onDate=" + onDate +
+                ", gender=" + gender +
+                '}';
+    }
 }
