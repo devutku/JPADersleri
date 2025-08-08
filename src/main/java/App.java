@@ -119,18 +119,32 @@ public class App {
 //          product.setCode(code);
 //          Product product = em.find(Product.class, 1);
 //          em.remove(product);
-        //JPQL
+
+        //JPQL (Java Persistence Query Language)
 
         //Query getAllCategories = em.createQuery("select c from Category c");
+        /*
         TypedQuery<Category> getAllCategories = em.createQuery("select c from Category c where c.id=:id", Category.class);
         getAllCategories.setParameter("id", 1);
+        Category category = getAllCategories.getSingleResult();
+        System.out.println(category.getName());
+        */
+        TypedQuery<Object[]> prodQuery = em.createQuery("SELECT p.id,p.name,p.price from Product p where p.price > 10 ", Object[].class);
+        List<Object[]> productcustomList = prodQuery.getResultList();
+        for (Object[] obj : productcustomList) {
+            System.out.println("ID :"+ obj[0] + " Name :" + obj[1] + " Price :" + obj[2]);
+        }
+
+
+        /*
         List<Category> categories = getAllCategories.getResultList();
-
-
-
         for (Category category : categories) {
             System.out.println(category.getName());
         }
+        */
+
+
+
 
 
         tx.commit();
