@@ -1,6 +1,7 @@
 import entity.*;
 import jakarta.persistence.*;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,11 +130,25 @@ public class App {
         Category category = getAllCategories.getSingleResult();
         System.out.println(category.getName());
         */
-        TypedQuery<Object[]> prodQuery = em.createQuery("SELECT p.id,p.name,p.price from Product p where p.price > 10 ", Object[].class);
-        List<Object[]> productcustomList = prodQuery.getResultList();
-        for (Object[] obj : productcustomList) {
-            System.out.println("ID :"+ obj[0] + " Name :" + obj[1] + " Price :" + obj[2]);
+
+        TypedQuery<CheapProduct> prodQuery = em.createQuery("SELECT NEW CheapProduct(p.id,p.name,p.price) from Product p where p.price > 10 ", CheapProduct.class);
+        List<CheapProduct> productcustomList = prodQuery.getResultList();
+        for (CheapProduct cheapProduct : productcustomList) {
+            System.out.println(cheapProduct.toString());
         }
+        // SELECT Count(product_id),c.category_name FROM products as p LEFT JOIN categories as c ON p.product_category_id = c.category_id group by p.product_category_id
+        TypedQuery<Object[]> customQuery = em.createQuery("SELECT COUNT(p.id),c.name from Product p LEFT JOIN p.category c group by p.category.id", Object[].class);
+        List<Object[]> list = customQuery.getResultList();
+        for (Object[] obj : list) {
+            System.out.println(obj[1]+":"+obj[0]+" adet ürün bulunuyor");
+        }
+        TypedQuery<Product> allQuery = em.createNamedQuery("Product.findAll", Product.class);
+        List<Product> productList = allQuery.getResultList();
+        for (Product product : productList) {
+            System.out.println(product.toString());
+        }
+
+
 
 
         /*
