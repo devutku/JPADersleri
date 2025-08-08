@@ -10,6 +10,7 @@
         <class>entity.Product</class>
         <class>entity.Supplier</class>
         <class>entity.Category</class>
+        <class>entity.Color</class>
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <properties>

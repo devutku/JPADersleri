@@ -1,18 +1,15 @@
-import entity.Category;
-import entity.Code;
-import entity.Product;
-import entity.Supplier;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
+import entity.*;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("market");
         EntityManager em = entityManagerFactory.createEntityManager();
         EntityTransaction tx = em.getTransaction();
-        // tx.begin();
+        tx.begin();
 
 //        entity.Customer c1 = new entity.Customer();
 //        c1.setOnDate(LocalDate.now());
@@ -64,44 +61,79 @@ public class App {
 //        product.setSupplier(supplier);
 //        product.setCategory(category);
 //        em.persist(product);
-
-
-
-
-
-
-
-      tx.begin();
 //        Product product = em.find(Product.class, 1);
 //        System.out.println(product.toString());
 
-        /*
-        Supplier supplier = em.find(Supplier.class, 1);
 
-        Code code = new Code();
-        code.setGroup("GRP-TEST");
-        code.setSerial("1123");
-        em.persist(code);
-
-        Product product = new Product();
-        product.setName("Samsung Galaxy");
-        product.setPrice(1234);
-        product.setStock(100);
-        product.setCode(code);
-        product.setSupplier(supplier);
-        em.persist(product);*/
+//        Supplier supplier = em.find(Supplier.class, 1);
+//
+//        Code code = new Code();
+//        code.setGroup("GRP-TEST");
+//        code.setSerial("1123");
+//        em.persist(code);
+//
+//        Product product = new Product();
+//        product.setName("Samsung Galaxy");
+//        product.setPrice(1234);
+//        product.setStock(100);
+//        product.setCode(code);
+//        product.setSupplier(supplier);
+//        em.persist(product);
 
 
 //        Code code = em.find(Code.class, 1);
 //        System.out.println(code.getProduct().getName());
+//          Color blue = new Color("Blue");
+//          Color red = new Color("Red");
+//          Color yellow = new Color("Yellow");
+//
+//          em.persist(blue);
+//          em.persist(red);
+//          em.persist(yellow);
+//
+//          Product product = em.find(Product.class, 1);
+//          List<Color> colorList = new ArrayList();
+//          colorList.add(blue);
+//          colorList.add(red);
+//          product.setColorList(colorList);
+//          em.persist(product);
 
-        Supplier supplier = em.find(Supplier.class, 1);
-        for (Product product: supplier.getProductList()){
-            System.out.println(product.toString());
+//        Product product = em.find(Product.class, 1);
+//        System.out.println(product.getColorList().toString());
+//
+//        Color color = em.find(Color.class, 1);
+//        System.out.println(color.getProductList().toString());
+//        Product product = em.find(Product.class, 1);
+//        System.out.println(product.getCategory().getName());
+//        System.out.println(product.getSupplier().getCompany());
+//          Code code = new Code();
+//          code.setSerial("2234");
+//          code.setGroup("UMC-2");
+//
+//          Product product = new Product();
+//          product.setName("TEST");
+//          product.setStock(10);
+//          product.setPrice(100);
+//          product.setCategory(em.find(Category.class,1));
+//          product.setSupplier(em.find(Supplier.class,1));
+//          product.setCode(code);
+//          Product product = em.find(Product.class, 1);
+//          em.remove(product);
+        //JPQL
+
+        //Query getAllCategories = em.createQuery("select c from Category c");
+        TypedQuery<Category> getAllCategories = em.createQuery("select c from Category c where c.id=:id", Category.class);
+        getAllCategories.setParameter("id", 1);
+        List<Category> categories = getAllCategories.getResultList();
+
+
+
+        for (Category category : categories) {
+            System.out.println(category.getName());
         }
 
 
-tx.commit();
+        tx.commit();
 
 
     }

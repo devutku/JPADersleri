@@ -2,29 +2,42 @@ package entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "products")
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private int id;
-    @Column(name = "product_name",nullable=false)
+    @Column(name = "product_name", nullable = false)
     private String name;
-    @Column(name = "product_price",nullable=false)
+    @Column(name = "product_price", nullable = false)
     private double price;
     @Column(name = "product_stock")
     private int stock;
 
-    @OneToOne
-    @JoinColumn(name = "product_code_id",referencedColumnName = "code_id")
+    @OneToOne(fetch = FetchType.LAZY,cascade =  {CascadeType.REMOVE,CascadeType.PERSIST,CascadeType.MERGE})
+    @JoinColumn(name = "product_code_id", referencedColumnName = "code_id")
     private Code code;
-    @ManyToOne
-    @JoinColumn(name="product_supplier_id",referencedColumnName = "supplier_id")
+
+    @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "product_supplier_id", referencedColumnName = "supplier_id")
     private Supplier supplier;
-    @ManyToOne
-    @JoinColumn(name ="product_category_id",referencedColumnName = "category_id")
+
+    @ManyToOne(fetch = FetchType.LAZY,cascade = {CascadeType.REMOVE})
+    @JoinColumn(name = "product_category_id", referencedColumnName = "category_id")
     private Category category;
+
+    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST})
+    @JoinTable(
+            name = "pro2colors",
+            joinColumns = {@JoinColumn(name = "pro2color_product_id")},
+            inverseJoinColumns = {@JoinColumn(name = "pro2color_color_id")}
+    )
+    private List<Color> colorList;
 
 
     public Product() {
@@ -86,6 +99,14 @@ public class Product {
         this.category = category;
     }
 
+    public List<Color> getColorList() {
+        return colorList;
+    }
+
+    public void setColorList(List<Color> colorList) {
+        this.colorList = colorList;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -96,6 +117,7 @@ public class Product {
                 ", code=" + code +
                 ", supplier=" + supplier +
                 ", category=" + category +
+                ", colorList=" + colorList +
                 '}';
     }
 }

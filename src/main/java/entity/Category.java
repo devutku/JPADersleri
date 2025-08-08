@@ -13,7 +13,7 @@ public class Category {
     private int id;
     @Column(name = "category_name")
     private String name;
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category",cascade = CascadeType.REMOVE)
     private List<Product> productList;
     public Category() {
 

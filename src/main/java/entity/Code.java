@@ -14,7 +14,7 @@ public class Code {
     @Column(name = "code_serial",nullable=false)
     private String serial;
 
-    @OneToOne(mappedBy = "code")
+    @OneToOne(mappedBy = "code",cascade = CascadeType.ALL)
     private Product product;
 
     public Code() {
